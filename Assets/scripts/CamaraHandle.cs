@@ -14,6 +14,7 @@ public class CamaraHandle : MonoBehaviour
     public GameObject xAuxBase;
     public GameObject []yAux;
     public GameObject[] xAux;
+    public Interpolation interpolation;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,11 +41,11 @@ public class CamaraHandle : MonoBehaviour
         
         if (Input.GetAxis("Mouse ScrollWheel") > 0f && sizeCan>1) // forward
         {
-            sizeCan--;
+            sizeCan-= sizeCan/15;
         }
         else if (Input.GetAxis("Mouse ScrollWheel") < 0f) // backwards
         {
-            sizeCan++;
+            sizeCan+= sizeCan/15;
         }
         if(sizeCan<1)
         {
@@ -70,5 +71,7 @@ public class CamaraHandle : MonoBehaviour
             xAux[i].transform.GetChild(1).GetComponent<TMPro.TextMeshPro>().text = pos.ToString();
             xAux[i].transform.position = new Vector3(xAux[i].transform.position.x, pos, xAux[i].transform.position.z);
         }
+        interpolation.handleSizePoints(sizeCan / 5);
+        interpolation.sizeCan = sizeCan / 5;
     }
 }

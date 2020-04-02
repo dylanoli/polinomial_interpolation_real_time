@@ -19,6 +19,8 @@ public class Interpolation : MonoBehaviour
     public HandlePoints handlePoints;
     public Toggle realTime;
     public float fps;
+    public float sizeRay;
+    public float sizeCan;
 
     // Start is called before the first frame update
     void Start()
@@ -75,18 +77,27 @@ public class Interpolation : MonoBehaviour
 
         float angle = Vector2.Angle(transform.right, points[1].transform.position);
         //float coeficient = Mathf.Pow(Mathf.Sin(angle * Mathf.PI / 180), 2);
-        float coeficient = 0;
-        float sizeRay = 15;
+        sizeRay = 16.5f/ sizeCan;
         for (int i = 0; i < sizeRed; i++)
         {
-            float x = i/sizeRay- 10;
+            float x = i/sizeRay - 9*sizeCan;
             float fx = f(x);
             pointRed[i].transform.position = new Vector2(x, fx);
         }
 
         handlePoints.updateUIPoints(points);
     }
-
+    public void handleSizePoints(float size)
+    {
+        for (int i = 0; i < points.Count; i++)
+        {
+            points[i].transform.localScale = Vector3.one * size;
+        }
+        for (int i = 0; i < sizeRed; i++)
+        {
+            pointRed[i].transform.localScale = Vector3.one * size;
+        }
+    }
     public void load()
     {
         int sizeInit = 3;
